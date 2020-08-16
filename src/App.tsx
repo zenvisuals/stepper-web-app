@@ -4,7 +4,9 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import styled from 'styled-components';
+import store from './redux/store';
 import Home from './views/Home';
 import Page1 from './views/Page1';
 import Page2 from './views/Page2';
@@ -21,24 +23,26 @@ const Wrapper = styled.div`
 
 function App() {
   return (
-    <Router>
-      <Wrapper>
-        <Switch>
-          <Route path="/page/1">
-            <Page1 />
-          </Route>
-          <Route path="/page/2">
-            <Page2 />
-          </Route>
-          <Route path="/page/3">
-            <Page3 />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </Wrapper>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Wrapper>
+          <Switch>
+            <Route path="/page/1">
+              <Page1 />
+            </Route>
+            <Route path="/page/2">
+              <Page2 />
+            </Route>
+            <Route path="/page/3">
+              <Page3 />
+            </Route>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </Wrapper>
+      </Router>
+    </Provider>
   );
 }
 

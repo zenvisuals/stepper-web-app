@@ -19,19 +19,27 @@ const Input = styled.input`
   padding: 0.5rem;
 `;
 
-interface TextFieldProps {
+interface NumberFieldProps {
   id: string,
-  children: React.ReactNode
+  children: React.ReactNode,
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+  value?: number | string
 }
 
-const TextField = (props: TextFieldProps) => {
-  const { id, children } = props;
+const NumberField = (props: NumberFieldProps) => {
+  const {
+    id, children, onChange, value,
+  } = props;
   return (
     <Wrapper>
       <Label htmlFor={id}>{children}</Label>
-      <Input type="text" id={id} />
+      <Input type="number" id={id} onChange={onChange} value={value} />
     </Wrapper>
   );
 };
 
-export default TextField;
+NumberField.defaultProps = {
+  value: '',
+};
+
+export default NumberField;
