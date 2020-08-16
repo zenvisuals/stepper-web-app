@@ -1,36 +1,32 @@
-import { createAction, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface UpdatePartAction {
   index: number,
   value: number|string
 }
 
-export const updateTotalParts = createAction<number>('UPDATE_TOTAL_PARTS');
-export const updatePart = createAction<UpdatePartAction>('UPDATE_PART');
-export const clearParts = createAction('CLEAR_PARTS');
-
 interface PartsState {
   totalParts: number,
   parts: Array<number|string>
 }
 
-const initialState = {
+export const initialState: PartsState = {
   totalParts: 0,
   parts: [],
 };
 
-export default (
-  state: PartsState = initialState,
-  action: PayloadAction<UpdatePartAction>,
-) => {
-  switch (action.type) {
-    case updateTotalParts.type:
+const partsSlice = createSlice({
+  name: 'parts',
+  initialState,
+  reducers: {
+    updateTotalParts(state: PartsState, action: PayloadAction<number>) {
       return {
         ...state,
         totalParts: action.payload,
-        parts: new Array<any>(action.payload).fill(''),
+        parts: new Array<number|string>(action.payload).fill(''),
       };
-    case updatePart.type:
+    },
+    updatePart(state: PartsState, action: PayloadAction<UpdatePartAction>) {
       return {
         ...state,
         parts: [
@@ -39,11 +35,15 @@ export default (
           ...state.parts.slice(action.payload.index + 1),
         ],
       };
-    case clearParts.type:
+    },
+    clearParts() {
       return {
         ...initialState,
       };
-    default:
-      return state;
-  }
-};
+    },
+  },
+});
+
+export const { updateTotalParts, updatePart, clearParts } = partsSlice.actions;
+
+export default partsSlice.reducer;
