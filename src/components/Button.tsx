@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 
-const Button = styled.button`
-  background-color: blue;
+interface ButtonProps {
+  secondary?: boolean
+}
+
+const Button = styled.button<ButtonProps>`
+  background-color: ${(props) => (props.secondary ? 'black' : 'blue')};
   border: 0;
   color: white;
   cursor: pointer;
@@ -9,7 +13,11 @@ const Button = styled.button`
   font-size: 1.5rem;
 
   &:hover {
-    background-color: black;
+    background-color: ${(props) => (props.secondary ? 'blue' : 'black')};
+  }
+
+  &:disabled {
+    background-color: gray;
   }
 `;
 
